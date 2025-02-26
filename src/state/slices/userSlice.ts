@@ -1,6 +1,7 @@
 import {createSlice, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit';
 import axios from 'axios';
 import {User} from '../../util/types';
+import {showNotification} from './notificationSlice';
 
 interface userState {
   users: User[];
@@ -14,38 +15,84 @@ const initialState: userState = {
 
 export const fetchUsers = createAsyncThunk<User[], number>(
   'users/fetchUsers',
-  async (page: number) => {
-    const response = await axios.get(
-      `https://reqres.in/api/users?page=${page}`
-    );
-    return response.data.data;
+  async (page: number, {dispatch}) => {
+    try {
+      const response = await axios.get(
+        `https://reqres.in/api/users?page=${page}`
+      );
+      return response.data.data;
+    } catch (error) {
+      dispatch(
+        showNotification({message: 'Failed to fetch users', type: 'error'})
+      );
+      throw error;
+    }
   }
 );
 
 export const addUser = createAsyncThunk(
   'users/add',
-  async (userData: Partial<User>) => {
-    const response = await axios.post('https://reqres.in/api/users', userData);
-    return response.data;
+  async (userData: Partial<User>, {dispatch}) => {
+    try {
+      const response = await axios.post(
+        'https://reqres.in/api/users',
+        userData
+      );
+      dispatch(
+        showNotification({message: 'User added successfully!', type: 'success'})
+      );
+      return response.data;
+    } catch (error) {
+      dispatch(
+        showNotification({message: 'Failed to add user', type: 'error'})
+      );
+      throw error;
+    }
   }
 );
 
 export const updateUser = createAsyncThunk(
   'users/updateUser',
-  async (userData: Partial<User>) => {
-    const response = await axios.put(
-      `https://reqres.in/api/users/${userData.id}`,
-      userData
-    );
-    return response.data;
+  async (userData: Partial<User>, {dispatch}) => {
+    try {
+      const response = await axios.put(
+        `https://reqres.in/api/users/${userData.id}`,
+        userData
+      );
+      dispatch(
+        showNotification({
+          message: 'User updated successfully!',
+          type: 'success',
+        })
+      );
+      return response.data;
+    } catch (error) {
+      dispatch(
+        showNotification({message: 'Failed to update user', type: 'error'})
+      );
+      throw error;
+    }
   }
 );
 
 export const deleteUser = createAsyncThunk(
   'users/deleteUser',
-  async (id: number) => {
-    await axios.delete(`https://reqres.in/api/users/${id}`);
-    return id;
+  async (id: number, {dispatch}) => {
+    try {
+      await axios.delete(`https://reqres.in/api/users/${id}`);
+      dispatch(
+        showNotification({
+          message: 'User deleted successfully!',
+          type: 'success',
+        })
+      );
+      return id;
+    } catch (error) {
+      dispatch(
+        showNotification({message: 'Failed to delete user', type: 'error'})
+      );
+      throw error;
+    }
   }
 );
 
