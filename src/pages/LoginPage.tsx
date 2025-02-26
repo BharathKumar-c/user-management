@@ -14,8 +14,8 @@ import {
 } from '@mui/material';
 
 const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState('barathwebdeveloper@gmail.com');
-  const [password, setPassword] = useState('123456');
+  const [email, setEmail] = useState('eve.holt@reqres.in');
+  const [password, setPassword] = useState('cityslicka');
   const [error, setError] = useState<string | null>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 import {
   fetchUsers,
   addUser,
   updateUser,
   deleteUser,
 } from '../state/slices/userSlice';
+import {logout} from '../state/slices/userAuthSlice';
 import {RootState, AppDispatch} from '../state/store';
 import {
   Container,
@@ -26,12 +28,18 @@ import {User} from '../util/types';
 
 const UserListPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const {users, loading} = useSelector((state: RootState) => state.users);
   const [page, setPage] = useState(1);
   const [view, setView] = useState<'list' | 'card'>('list'); // ✅ View toggle
   const [openModal, setOpenModal] = useState(false);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<number | null>(null);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/login');
+  };
 
   useEffect(() => {
     dispatch(fetchUsers(page));
@@ -49,7 +57,9 @@ const UserListPage: React.FC = () => {
 
   return (
     <Container>
-      <h2>User List</h2>
+      <Button variant="contained" color="secondary" onClick={handleLogout}>
+        Logout
+      </Button>
 
       {/* Toggle Between List & Card View */}
       <ToggleButtonGroup

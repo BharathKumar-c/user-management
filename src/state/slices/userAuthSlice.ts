@@ -6,8 +6,8 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  token: null,
-  isAuthenticated: false,
+  token: localStorage.getItem('token') || null,
+  isAuthenticated: !!localStorage.getItem('token'),
 };
 
 const userAuthSlice = createSlice({
@@ -17,6 +17,7 @@ const userAuthSlice = createSlice({
     loginSucess: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
       state.isAuthenticated = true;
+      localStorage.setItem('token', action.payload);
     },
     logout: (state) => {
       state.token = null;
