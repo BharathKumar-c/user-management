@@ -1,14 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, {useEffect, useMemo, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {
-  fetchUsers,
-  addUser,
-  updateUser,
-  deleteUser,
-} from '../state/slices/userSlice';
+import {useUsers} from '../hooks/useUsers';
 import {logout} from '../state/slices/userAuthSlice';
-import {RootState, AppDispatch} from '../state/store';
+import {useDispatch} from 'react-redux';
 import {
   Container,
   Button,
@@ -22,16 +16,17 @@ import {
   ToggleButtonGroup,
 } from '@mui/material';
 import UserCard from '../components/UserCard';
-import UserListItem from '../components/UserListItem'; // ✅ Keep List Item
+import UserListItem from '../components/UserListItem';
 import UserFormModal from '../components/UserFormModal';
 import {User} from '../util/types';
 
 const UserListPage: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {users, loading} = useSelector((state: RootState) => state.users);
+  const {users, loading, createUser, modifyUser, removeUser, fetchUser} =
+    useUsers();
   const [page, setPage] = useState(1);
-  const [view, setView] = useState<'list' | 'card'>('list'); // ✅ View toggle
+  const [view, setView] = useState<'list' | 'card'>('list');
   const [openModal, setOpenModal] = useState(false);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<number | null>(null);
@@ -41,15 +36,18 @@ const UserListPage: React.FC = () => {
     navigate('/login');
   };
 
+  // Fetch users when page changes
   useEffect(() => {
-    dispatch(fetchUsers(page));
-  }, [dispatch, page]);
+    fetchUser(page);
+  }, [fetchUser, page]);
+
+  const filteredUsers = useMemo(() => users, [users]);
 
   const handleSaveUser = (userData: Partial<User>) => {
     if (editingUser) {
-      dispatch(updateUser({...editingUser, ...userData} as User));
+      modifyUser({...editingUser, ...userData} as User);
     } else {
-      dispatch(addUser(userData));
+      createUser(userData);
     }
     setOpenModal(false);
     setEditingUser(null);
@@ -82,7 +80,7 @@ const UserListPage: React.FC = () => {
         <CircularProgress />
       ) : (
         <Grid container spacing={2}>
-          {users.map((user: User) =>
+          {filteredUsers.map((user: User) =>
             view === 'card' ? (
               <Grid item xs={12} sm={6} md={4} key={user.id}>
                 <UserCard user={user} />
@@ -111,9 +109,7 @@ const UserListPage: React.FC = () => {
         <DialogTitle>Are you sure you want to delete this user?</DialogTitle>
         <DialogActions>
           <Button onClick={() => setConfirmDelete(null)}>Cancel</Button>
-          <Button
-            color="error"
-            onClick={() => dispatch(deleteUser(confirmDelete!))}>
+          <Button color="error" onClick={() => removeUser(confirmDelete!)}>
             Delete
           </Button>
         </DialogActions>
