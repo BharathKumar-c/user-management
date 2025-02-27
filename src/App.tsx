@@ -1,6 +1,6 @@
-import React from 'react';
-import AppRoutes from './routes';
-import Notification from './components/Notification';
+import React from "react";
+import AppRoutes from "./routes";
+import Notification from "./components/Notification";
 
 function App() {
   return (

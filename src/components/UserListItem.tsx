@@ -1,18 +1,18 @@
-import React from 'react';
+import React from "react";
 import {
   ListItem,
   ListItemAvatar,
   Avatar,
   ListItemText,
   Divider,
-} from '@mui/material';
-import {User} from '../util/types';
+} from "@mui/material";
+import { User } from "../util/types";
 
 interface UserListItemProps {
   user: User;
 }
 
-const UserListItem: React.FC<UserListItemProps> = ({user}) => {
+const UserListItem: React.FC<UserListItemProps> = ({ user }) => {
   return (
     <>
       <ListItem>

@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
-} from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
-import UserListPage from './pages/UserListPage';
-import PrivateRoute from './components/PrivateRoute';
+} from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import UserListPage from "./pages/UserListPage";
+import PrivateRoute from "./components/PrivateRoute";
 
 const AppRoutes = () => {
   return (

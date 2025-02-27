@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import {Modal, Box, TextField, Button, Typography} from '@mui/material';
-import {User} from '../util/types';
+import React, { useState, useEffect } from "react";
+import { Modal, Box, TextField, Button, Typography } from "@mui/material";
+import { User } from "../util/types";
 
 interface UserFormModalProps {
   open: boolean;
@@ -16,21 +16,21 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
   initalData,
 }) => {
   const [formData, setFormData] = useState<Partial<User>>({
-    first_name: '',
-    last_name: '',
-    email: '',
+    first_name: "",
+    last_name: "",
+    email: "",
   });
 
   useEffect(() => {
     if (initalData) {
       setFormData(initalData);
     } else {
-      setFormData({first_name: '', last_name: '', email: ''});
+      setFormData({ first_name: "", last_name: "", email: "" });
     }
   }, [initalData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = () => {
@@ -42,21 +42,22 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
     <Modal open={open} onClose={onClose}>
       <Box
         sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
           width: 400,
-          bgcolor: 'background.paper',
+          bgcolor: "background.paper",
           p: 4,
           borderRadius: 2,
-        }}>
+        }}
+      >
         <Typography variant="h6" mb={2}>
-          {initalData ? 'Edit User' : 'Add User'}
+          {initalData ? "Edit User" : "Add User"}
         </Typography>
         <TextField
           fullWidth
-          label={'First Name'}
+          label={"First Name"}
           name="first_name"
           value={formData.first_name}
           onChange={handleChange}
@@ -64,7 +65,7 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
         />
         <TextField
           fullWidth
-          label={'Last Name'}
+          label={"Last Name"}
           name="last_name"
           value={formData.last_name}
           onChange={handleChange}
@@ -72,7 +73,7 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
         />
         <TextField
           fullWidth
-          label={'Email'}
+          label={"Email"}
           name="email"
           value={formData.email}
           onChange={handleChange}
@@ -82,8 +83,9 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
           variant="contained"
           color="primary"
           onClick={handleSubmit}
-          sx={{mt: 2}}
-          fullWidth>
+          sx={{ mt: 2 }}
+          fullWidth
+        >
           Save
         </Button>
       </Box>

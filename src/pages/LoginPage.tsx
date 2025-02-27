@@ -1,8 +1,8 @@
-import axios from 'axios';
-import React, {useState} from 'react';
-import {useDispatch} from 'react-redux';
-import {useNavigate} from 'react-router-dom';
-import {loginSucess} from '../state/slices/userAuthSlice';
+import axios from "axios";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { loginSucess } from "../state/slices/userAuthSlice";
 import {
   Container,
   Box,
@@ -11,31 +11,31 @@ import {
   Typography,
   Alert,
   Paper,
-} from '@mui/material';
+} from "@mui/material";
 
 const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState('eve.holt@reqres.in');
-  const [password, setPassword] = useState('cityslicka');
+  const [email, setEmail] = useState("eve.holt@reqres.in");
+  const [password, setPassword] = useState("cityslicka");
   const [error, setError] = useState<string | null>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     try {
-      const response = await axios.post('https://reqres.in/api/login', {
+      const response = await axios.post("https://reqres.in/api/login", {
         email,
         password,
       });
 
       if (response.data.token) {
         dispatch(loginSucess(response.data.token));
-        localStorage.setItem('token', response.data.token);
-        navigate('/users');
+        localStorage.setItem("token", response.data.token);
+        navigate("/users");
       }
     } catch (e) {
-      setError('Invalid email or password. please try agin');
+      setError("Invalid email or password. please try agin");
     }
   };
 
@@ -45,10 +45,12 @@ const LoginPage: React.FC = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        minHeight="100vh">
+        minHeight="100vh"
+      >
         <Paper
           elevation={3}
-          sx={{padding: 4, width: '100%', textAlign: 'center'}}>
+          sx={{ padding: 4, width: "100%", textAlign: "center" }}
+        >
           <Typography variant="h5" fontWeight="bold" mb={2}>
             Login
           </Typography>
@@ -79,7 +81,8 @@ const LoginPage: React.FC = () => {
               variant="contained"
               color="primary"
               fullWidth
-              sx={{marginTop: 2}}>
+              sx={{ marginTop: 2 }}
+            >
               Login
             </Button>
           </form>
