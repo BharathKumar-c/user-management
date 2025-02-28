@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../../util/api";
 import { User } from "../../util/types";
 import { showNotification } from "./notificationSlice";
 
@@ -19,9 +19,7 @@ export const fetchUsers = createAsyncThunk(
   "users/fetchUsers",
   async (page: number, { dispatch }) => {
     try {
-      const response = await axios.get(
-        `https://reqres.in/api/users?page=${page}`,
-      );
+      const response = await api.get(`/users?page=${page}`);
       return response.data;
     } catch (error) {
       dispatch(
@@ -36,10 +34,7 @@ export const addUser = createAsyncThunk(
   "users/add",
   async (userData: Partial<User>, { dispatch }) => {
     try {
-      const response = await axios.post(
-        "https://reqres.in/api/users",
-        userData,
-      );
+      const response = await api.post("/users", userData);
       dispatch(
         showNotification({
           message: "User added successfully!",
@@ -60,10 +55,7 @@ export const updateUser = createAsyncThunk(
   "users/updateUser",
   async (userData: Partial<User>, { dispatch }) => {
     try {
-      const response = await axios.put(
-        `https://reqres.in/api/users/${userData.id}`,
-        userData,
-      );
+      const response = await api.put(`/users/${userData.id}`, userData);
       dispatch(
         showNotification({
           message: "User updated successfully!",
@@ -84,7 +76,7 @@ export const deleteUser = createAsyncThunk(
   "users/deleteUser",
   async (id: number, { dispatch }) => {
     try {
-      await axios.delete(`https://reqres.in/api/users/${id}`);
+      await api.delete(`/users/${id}`);
       dispatch(
         showNotification({
           message: "User deleted successfully!",

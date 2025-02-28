@@ -1,39 +1,103 @@
-# User Management App
+# **User Management Application**
 
-## Project Setup
-This project is a User Management Single Page Application (SPA) built with React, TypeScript, Redux Toolkit, Tailwind CSS, and Material-UI. It includes authentication, user CRUD operations, search, pagination, and a list/card view toggle.
+A modern **Single Page Application (SPA)** for managing users with authentication, CRUD operations, search, pagination, and multiple view modes.
 
-## Tech Stack
-- **React** (TypeScript)
-- **Redux Toolkit** (State Management)
-- **React Router** (Navigation)
-- **Tailwind CSS** (Styling)
-- **Material-UI** (UI Components)
-- **Axios** (API Calls)
+## **Features**
+
+✅ User Authentication  
+✅ User CRUD Operations (Create, Read, Update, Delete)  
+✅ Search Functionality  
+✅ Pagination  
+✅ List/Card View Toggle  
+✅ Responsive Design with Tailwind CSS and Material-UI
+✅ Secure API Integration with Axios
+
+## **Tech Stack**
+
+- **Frontend**: React 18 + TypeScript
+- **State Management**: Redux Toolkit
+- **Navigation**: React Router v6
+- **Styling**: Tailwind CSS + Material-UI
+- **API Handling**: Axios
+- **Development Tools**: ESLint, Prettier, Jest
 
 ---
 
+## **Getting Started**
+
+### **1. Clone the Repository**
+
+```sh
+git clone https://github.com/BharathKumar-c/user-management.git
+cd user-management
+```
+
+### **2. Install Dependencies**
+
+```sh
+npm install
+```
+
+### **3. Start Development Server**
+
+```sh
+npm start
+```
+
+The application will be available at **`http://localhost:3000/`** (CRA default port).
+
 ---
-### **Step 2: Folder Structure & Redux Setup**
-**Updated Folder Structure:**
+
+## **Project Structure**
+
 ```
 user-management/
 │── src/
-│   ├── component/        # Reusable UI components
-│   ├── hooks/            # Custom hooks
-│   ├── pages/            # Page components
-│   ├── service/          # API service functions
-│   ├── state/            # Redux store setup
-│   │   ├── store.ts      # Redux store
-│   │   ├── slices/       # Redux slices
+│   ├── components/       # Reusable UI components
+│   ├── hooks/            # Custom React hooks
+│   ├── pages/            # Page components (Login, User List, etc.)
+│   ├── state/            # Redux store configuration
+│   │   ├── store.ts
+│   │   ├── slices/
 │   │   │   ├── userAuthSlice.ts
 │   │   │   ├── userSlice.ts
-│   ├── styles/           # Global styles
 │   ├── util/             # Utility functions
 │   ├── App.tsx           # Root component
-│   ├── main.tsx          # Entry point
+│   ├── index.tsx         # Entry point
 │   ├── routes.tsx        # Route definitions
-│── tailwind.config.js
-│── tsconfig.json
-│── package.json
+│── tailwind.config.js    # Tailwind CSS configuration
+│── tsconfig.json         # TypeScript configuration
+│── .eslintrc.js          # ESLint configuration
+│── .prettierrc           # Prettier configuration
+│── package.json          # Dependencies & scripts
+│── README.md             # Project documentation
 ```
+
+---
+
+## **Available Scripts**
+
+Run these commands inside the project directory:
+
+- **Start Development Server**
+  ```sh
+  npm start
+  ```
+- **Build for Production**
+  ```sh
+  npm run build
+  ```
+- **Format Code using Prettier**
+  ```sh
+  npm run format
+  ```
+- **Check Code Linting**
+  ```sh
+  npm run lint
+  ```
+
+---
+
+## **License**
+
+This project is licensed under the **MIT License**.

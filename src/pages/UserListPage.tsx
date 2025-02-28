@@ -9,6 +9,7 @@ import {
   DialogActions,
   DialogTitle,
   Button,
+  Typography,
 } from "@mui/material";
 import UserTable from "../components/UserTable";
 import UserCardList from "../components/UserCardList";
@@ -98,6 +99,10 @@ const UserListPage: React.FC = () => {
           <ViewToggle view={view} setView={setView} />
           {loading ? (
             <LoadingScreen />
+          ) : filteredUsers.length === 0 ? (
+            <Typography variant="h6" color="textSecondary" align="center">
+              No users found. Try again later.
+            </Typography>
           ) : view === "card" ? (
             <UserCardList
               users={filteredUsers}
