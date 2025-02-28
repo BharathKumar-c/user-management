@@ -1,8 +1,8 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { loginSuccess } from "../state/slices/userAuthSlice";
+import axios from 'axios';
+import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
+import {loginSuccess} from '../state/slices/userAuthSlice';
 import {
   Container,
   Box,
@@ -14,13 +14,13 @@ import {
   FormControlLabel,
   Checkbox,
   InputAdornment,
-} from "@mui/material";
-import { Email, Lock } from "@mui/icons-material";
+} from '@mui/material';
+import {Email, Lock} from '@mui/icons-material';
 
 const LoginPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState("eve.holt@reqres.in");
-  const [password, setPassword] = useState("cityslicka");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [rememberMe, setRememberMe] = useState(false);
   const dispatch = useDispatch();
@@ -32,23 +32,23 @@ const LoginPage: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post("https://reqres.in/api/login", {
+      const response = await axios.post('https://reqres.in/api/login', {
         email,
         password,
       });
 
       if (response.data.token) {
-        const userName = email.split("@")[0];
-        dispatch(loginSuccess({ token: response.data.token, userName }));
+        const userName = email.split('@')[0];
+        dispatch(loginSuccess({token: response.data.token, userName}));
 
         if (rememberMe) {
-          localStorage.setItem("token", response.data.token);
+          localStorage.setItem('token', response.data.token);
         }
 
-        navigate("/users");
+        navigate('/users');
       }
     } catch (e) {
-      setError("Invalid email or password. Please try again.");
+      setError('Invalid email or password. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -67,12 +67,11 @@ const LoginPage: React.FC = () => {
           elevation={3}
           sx={{
             padding: 4,
-            width: "100%",
+            width: '100%',
             maxWidth: 400,
-            textAlign: "center",
+            textAlign: 'center',
             borderRadius: 2,
-          }}
-        >
+          }}>
           <Typography variant="h5" fontWeight="bold" mb={2}>
             Log in
           </Typography>
@@ -121,7 +120,7 @@ const LoginPage: React.FC = () => {
                 />
               }
               label="Remember me"
-              sx={{ textAlign: "left", width: "100%", mt: 1 }}
+              sx={{textAlign: 'left', width: '100%', mt: 1}}
             />
             <Button
               type="submit"
@@ -130,10 +129,9 @@ const LoginPage: React.FC = () => {
               loading={isLoading}
               sx={{
                 marginTop: 2,
-                backgroundColor: "#007bff",
-                "&:hover": { backgroundColor: "#0056b3" },
-              }}
-            >
+                backgroundColor: '#007bff',
+                '&:hover': {backgroundColor: '#0056b3'},
+              }}>
               Log in
             </Button>
           </form>
