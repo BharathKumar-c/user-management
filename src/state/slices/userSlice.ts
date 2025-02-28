@@ -5,22 +5,24 @@ import { showNotification } from "./notificationSlice";
 
 interface userState {
   users: User[];
+  totalPageCount: number;
   loading: boolean;
 }
 
 const initialState: userState = {
   users: [],
+  totalPageCount: 0,
   loading: false,
 };
 
-export const fetchUsers = createAsyncThunk<User[], number>(
+export const fetchUsers = createAsyncThunk(
   "users/fetchUsers",
   async (page: number, { dispatch }) => {
     try {
       const response = await axios.get(
         `https://reqres.in/api/users?page=${page}`,
       );
-      return response.data.data;
+      return response.data;
     } catch (error) {
       dispatch(
         showNotification({ message: "Failed to fetch users", type: "error" }),
@@ -108,9 +110,10 @@ const userSlice = createSlice({
       .addCase(fetchUsers.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
+      .addCase(fetchUsers.fulfilled, (state, action) => {
         state.loading = false;
-        state.users = action.payload;
+        state.users = action.payload.data;
+        state.totalPageCount = action.payload.total_pages;
       })
       .addCase(fetchUsers.rejected, (state) => {
         state.loading = false;

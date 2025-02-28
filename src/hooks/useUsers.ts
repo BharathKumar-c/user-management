@@ -11,7 +11,9 @@ import { User } from "../util/types";
 
 export const useUsers = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { users, loading } = useSelector((state: RootState) => state.users);
+  const { users, loading, totalPageCount } = useSelector(
+    (state: RootState) => state.users,
+  );
 
   const fetchUser = useCallback(
     (page: number) => {
@@ -28,5 +30,13 @@ export const useUsers = () => {
   const modifyUser = (user: User) => dispatch(updateUser(user));
   const removeUser = (id: number) => dispatch(deleteUser(id));
 
-  return { users, loading, fetchUser, createUser, modifyUser, removeUser };
+  return {
+    users,
+    loading,
+    totalPageCount,
+    fetchUser,
+    createUser,
+    modifyUser,
+    removeUser,
+  };
 };
